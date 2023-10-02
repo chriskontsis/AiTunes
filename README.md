@@ -53,4 +53,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Acknowledgements 🙌
 
 - Thanks to our team members for their contributions and tireless effort.
-- Special thanks to the open-source tools and libraries that made this project possible.
