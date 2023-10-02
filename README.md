@@ -42,14 +42,9 @@ To get a local copy up and running, follow these simple steps.
 - **Database**: PostgreSQL, SQLite
 - **Other Tools**: Pytest, Conda, Vercel
 
-## Contributing 🤝
+## Capstone 🤝
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
+CSE471 Capstone Project
 
 ## License 📄
 
