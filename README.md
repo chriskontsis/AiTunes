@@ -19,7 +19,7 @@ To get a local copy up and running, follow these simple steps.
 ## Prerequisites
 
 1. Python3
-2. Node.js
+2. React
 
 ## Installation 🛠️
 
