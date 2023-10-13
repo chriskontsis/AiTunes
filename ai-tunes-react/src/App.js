@@ -4,10 +4,13 @@ import headphones from './headphones.png';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
+  const [showTrack, setShowTrack] = useState(false);
 
   const handleSubmit = () => {
-    // You can add any logic here to handle the input value if needed
     console.log(inputValue);
+    
+    // Show the embedded track
+    setShowTrack(true);
     
     // Clearing the input box after submission
     setInputValue('');
@@ -25,6 +28,18 @@ function App() {
         placeholder="Give us an idea"
       />
       <button onClick={handleSubmit} className="submit-button">Submit</button>
+      {showTrack && (
+        <iframe 
+          style={{borderRadius: '12px', marginTop: '20px'}} 
+          src="https://open.spotify.com/embed/track/4Uiw0Sl9yskBaC6P4DcdVD?utm_source=generator" 
+          width="700px" 
+          height="352" 
+          frameBorder="1" 
+          allowfullscreen="1" 
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy">
+        </iframe>
+      )}
     </div>
   );
 }
