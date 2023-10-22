@@ -15,6 +15,11 @@ function App() {
     "https://open.spotify.com/track/7dQeS4ErW1iWvnKdrtKwKr?si=b1c3d7df1b6d489e",
     "https://open.spotify.com/track/11LmqTE2naFULdEP94AUBa?si=06d30cd919774c48",
     "https://open.spotify.com/track/1G391cbiT3v3Cywg8T7DM1?si=fb28b31071db44fc",
+    "https://open.spotify.com/track/5Z3trOR982mBrJcPfrLUsq?si=52963b4c04164a7e",
+    "https://open.spotify.com/track/5bFuHlXKw66Uu2cHKn5bf8?si=5a23fba2295a401a",
+    "https://open.spotify.com/track/7dQeS4ErW1iWvnKdrtKwKr?si=b1c3d7df1b6d489e",
+    "https://open.spotify.com/track/11LmqTE2naFULdEP94AUBa?si=06d30cd919774c48",
+    "https://open.spotify.com/track/1G391cbiT3v3Cywg8T7DM1?si=fb28b31071db44fc",
     "https://open.spotify.com/track/5Z3trOR982mBrJcPfrLUsq?si=52963b4c04164a7e"
   ];
 
