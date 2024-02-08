@@ -10,12 +10,31 @@ GLOBAL_CLIENT_SECRET = '8ddd32222f80488a88cc7819cbcb2fa1'
 
 spotify = None
 
-
 class SpotifyAPIWrapper:
     def __init__(self):
         authenticator = Authenticator(GLOBAL_CLIENT_ID, GLOBAL_CLIENT_SECRET)
         self.spotify = authenticator.doAuth()
+
+    def getUsersPlaylists(self,username):
+
+        playlists = self.spotify.user_playlists(username)
+        playlist_uris = []
+        playlist_names = []
+
+        for playlist in playlists['items']:
+            print(playlist['name'])
+            # playlist_names.append(playlist['name'].encode('ascii','ignore').decode('ascii'))
+            # playlist_uris.append(playlists['uri'].split(':')[2])
+
         
+    def getSongsFromPlaylist(self, uri, username, name=""):
+
+        song_list = []
+        results = self.spotify.user_playlist(username, uri)
+        tracks = results['tracks']
+
+    
+
 
 
 
