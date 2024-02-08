@@ -22,9 +22,12 @@ class SpotifyAPIWrapper:
         playlist_names = []
 
         for playlist in playlists['items']:
-            print(playlist['name'])
-            # playlist_names.append(playlist['name'].encode('ascii','ignore').decode('ascii'))
-            # playlist_uris.append(playlists['uri'].split(':')[2])
+            playlist_names.append(playlist['name'])
+            playlist_uris.append(playlist['uri'].split(':')[2])
+
+        return pd.DataFrame({'name': playlist_names, 'uris': playlist_uris}, columns=['name', 'uris'])
+
+        
 
         
     def getSongsFromPlaylist(self, uri, username, name=""):
@@ -32,6 +35,8 @@ class SpotifyAPIWrapper:
         song_list = []
         results = self.spotify.user_playlist(username, uri)
         tracks = results['tracks']
+
+        print(tracks)
 
     
 
