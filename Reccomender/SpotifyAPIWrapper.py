@@ -29,14 +29,49 @@ class SpotifyAPIWrapper:
 
         
 
+    def getName(self, tracks, song_list):
+        '''
         
+        returns a list of trakcs with 
+        song_name, uri, genres, artist_name
+
+        Where the genres are the genres that artist caters towards
+        
+        '''
+        track_data = []
+        for i, item in enumerate(tracks['items']):
+                
+            track = item['track']
+            song_name = track['name']
+            uri = track['uri']
+            artist_name = track['artists'][0]['name']
+
+            result = self.spotify.search(artist_name)
+            track = result['tracks']['items'][0]
+            artist = self.spotify.artist(track["artists"][0]["external_urls"]["spotify"])
+            genres = artist["genres"]
+
+            track_data.append((song_name, uri.split(':')[2], genres, artist_name))
+
+        return track_data
+
     def getSongsFromPlaylist(self, uri, username, name=""):
 
         song_list = []
         results = self.spotify.user_playlist(username, uri)
         tracks = results['tracks']
+        song_list.extend(self.getName(tracks, song_list))
 
-        print(tracks)
+        while(tracks['next']):
+            tracks = self.spotify.next(tracks)
+            song_list.extend(self.getName(tracks, song_list))
+
+        song_names = [tuple[0] for tuple in song_list]
+        uris = [tuple[1] for tuple in song_list]
+        genres = [tuple[2] for tuple in song_list]
+        artists = [tuple[3] for tuple in song_list]
+
+        return pd.DataFrame(data={'song names':song_names, 'uris':uris, 'genres':genres, 'artists':artists})
 
     
 
