@@ -71,10 +71,57 @@ class SpotifyAPIWrapper:
         genres = [tuple[2] for tuple in song_list]
         artists = [tuple[3] for tuple in song_list]
 
-        return pd.DataFrame(data={'song names':song_names, 'uris':uris, 'genres':genres, 'artists':artists})
+        return pd.DataFrame(data={'name':song_names, 'uri':uris, 'genres':genres, 'artists':artists})
 
-    
+    def getFeatures(self, songsDF):
+        names = []
+        danceability = []
+        energy = []
+        acousticness = []
+        danceability = []
+        energy = []
+        instrumentalness = []
+        liveness = []
+        loudness = []
+        speechiness = []
+        tempo = []
+        valence = []
 
+
+        for _, row in songsDF.iterrows():
+            uri = row['uri']
+            if(not isinstance(uri,str)):
+                continue
+            name = row['name']
+            features = self.spotify.audio_features(uri)
+            if features != [None]:
+                names.append(name)
+                acousticness.append(features[0]['acousticness'])
+                danceability.append(features[0]['danceability'])
+                energy.append(features[0]['energy'])
+                instrumentalness.append(features[0]['instrumentalness'])
+                liveness.append(features[0]['liveness'])
+                loudness.append(features[0]['loudness'])
+                speechiness.append(features[0]['speechiness'])
+                tempo.append(features[0]['tempo'])
+                valence.append(features[0]['valence'])
+        
+
+
+        data = {
+            'name' : names,
+            'acousticness' : acousticness,
+            'danceability' : danceability,
+            'energy' : energy,
+            'instrumentalness' : instrumentalness,
+            'liveness' : liveness,
+            'loudness' : loudness,
+            'speechiness' : speechiness,
+            'tempo': tempo,
+            'valence' : valence
+        }
+
+        return pd.DataFrame(data)
 
 
 
