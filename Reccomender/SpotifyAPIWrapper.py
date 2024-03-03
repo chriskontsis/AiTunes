@@ -127,8 +127,6 @@ class SpotifyAPIWrapper:
 
         return pd.DataFrame(data)
 
-
-
 class Authenticator:
     def __init__(self, client_id, client_secret):
         self.CLIENT_ID = client_id
