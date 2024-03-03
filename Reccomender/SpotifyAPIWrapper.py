@@ -1,7 +1,9 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.exceptions import SpotifyException
 import pandas as pd
 import sys
+import time
 from datetime import timedelta
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -94,6 +96,8 @@ class SpotifyAPIWrapper:
                 continue
             name = row['name']
             features = self.spotify.audio_features(uri)
+            print("sleep for 30...")
+            time.sleep(30)
             if features != [None]:
                 names.append(name)
                 acousticness.append(features[0]['acousticness'])
