@@ -7,8 +7,8 @@ import time
 from datetime import timedelta
 from spotipy.oauth2 import SpotifyOAuth
 
-GLOBAL_CLIENT_ID = 'ce6d69e4d2744f39a9ff5c84164b72e5'
-GLOBAL_CLIENT_SECRET = '8ddd32222f80488a88cc7819cbcb2fa1'
+GLOBAL_CLIENT_ID = '45bccfc1fe70457dbce6335a5572ee7d'
+GLOBAL_CLIENT_SECRET = '7aeb2ef5e07440528b92d17b512afddf'
 
 spotify = None
 
@@ -47,12 +47,10 @@ class SpotifyAPIWrapper:
             song_name = track['name']
             uri = track['uri']
             artist_name = track['artists'][0]['name']
-
             result = self.spotify.search(artist_name)
             track = result['tracks']['items'][0]
             artist = self.spotify.artist(track["artists"][0]["external_urls"]["spotify"])
             genres = artist["genres"]
-
             track_data.append((song_name, uri.split(':')[2], genres, artist_name))
 
         return track_data
@@ -96,8 +94,6 @@ class SpotifyAPIWrapper:
                 continue
             name = row['name']
             features = self.spotify.audio_features(uri)
-            print("sleep for 30...")
-            time.sleep(30)
             if features != [None]:
                 names.append(name)
                 acousticness.append(features[0]['acousticness'])
