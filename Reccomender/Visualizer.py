@@ -1,7 +1,5 @@
 from math import pi
-import numpy as np
 import pandas as pd
-import altair as alt
 import matplotlib.pyplot as plt
 
 
@@ -18,11 +16,6 @@ class Visualizer:
         values = normalized.tolist()
         values += values[:1]
 
-        print(values)
-        print(categories)
-        
-        #ax.set_title(str(df['name'].iloc[x*subs+y][:17] + "..."), fontsize=8)
-
         angles = [n / float(N) * 2 * pi for n in range(N)]
         angles += angles[:1]
 
@@ -31,7 +24,7 @@ class Visualizer:
         ax.set_title(title, fontsize=16)
         ax.plot(angles, values, linewidth=1, linestyle='solid') 
         ax.fill(angles, values, 'b', alpha=0.1)
-        plt.show()
+        return ax
 
 
 
