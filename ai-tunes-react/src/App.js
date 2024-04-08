@@ -22,16 +22,42 @@ function App() {
     "https://open.spotify.com/track/5Z3trOR982mBrJcPfrLUsq?si=52963b4c04164a7e"
   ];
 
-  const handleSubmit = () => {
-    console.log(inputValue);
-
-    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-    setSelectedTrack(randomTrack);
-
-    setShowTrack(true);
-
-    setInputValue('');
+  const handleSubmit = async () => {
+    if (!inputValue) {
+      alert('Please enter a song URI');
+      return;
+    }
+  
+    console.log('Submitting:', inputValue);
+  
+    try {
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ songUri: inputValue }) // Assuming your Flask expects a JSON with 'songUri'
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response from Flask:', data);
+  
+        
+        setSelectedTrack(`https://open.spotify.com/track/${data.uri}`);
+        setShowTrack(true);
+      } else {
+        // Handle HTTP errors
+        console.error('HTTP error:', response.status, response.statusText);
+      }
+    } catch (error) {
+      // Handle network errors
+      console.error('Network error:', error);
+    }
+  
+    setInputValue(''); // Clear the input field
   };
+  
 
   return (
     <div className="bg-white">

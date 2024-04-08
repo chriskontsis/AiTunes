@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  
+# import cors policy
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import SpotifyAPIWrapper
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes and origins
+
 ##NEEDS TO BE CHANGES TO TAKE URI AND GET SONG DETAILS
 def getSongFeatures():
     file_path = 'Data/Training/Train.csv'
