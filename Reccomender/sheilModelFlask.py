@@ -65,17 +65,43 @@ def getSongName(index, songFeats1):
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.get_json()
-    song_uri = data.get('uri')  
-    inputFeats, songFeats = getSongFeatures(song_uri)
-    songFeats1 = songFeats.copy()
-    inputName, songName = dropNames(inputFeats, songFeats)
-    result, index = model(inputName, songName)
-    #song_name = getSongName(index, songFeats1)
-    song_name = songFeats1.at[index, 'name']
-    result = result.to_json()
-    song_uri = getSongURI(song_name)
-    return jsonify(song_uri)
+    try:
+        data = request.get_json()
+        if not data or 'uri' not in data:
+            return jsonify({'error': 'No URI provided'}), 400
+
+        song_uri = data.get('uri')
+        if not song_uri:
+            return jsonify({'error': 'URI is empty'}), 400
+
+        inputFeats, songFeats = getSongFeatures(song_uri)
+        if inputFeats.empty or songFeats.empty:
+            return jsonify({'error': 'Song features not found'}), 404
+
+        songFeats1 = songFeats.copy()
+        inputName, songName = dropNames(inputFeats, songFeats)
+        result, index = model(inputName, songName)
+
+        if result is None or index is None:
+            return jsonify({'error': 'Song matching failed'}), 500
+
+        song_name = songFeats1.at[index, 'name']
+        song_uri = getSongURI(song_name)
+        if not song_uri:
+            return jsonify({'error': 'Song URI not found'}), 404
+
+        result = result.to_json()
+
+        # Create the response and add CORS headers
+        response = jsonify({'song_uri': song_uri, 'details': result})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    except Exception as e:
+        # Log the exception to the server's log
+        app.logger.error(f'Error in predict: {e}')
+        return jsonify({'error': 'Internal server error'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

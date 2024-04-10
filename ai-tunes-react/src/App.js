@@ -36,27 +36,25 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ songUri: inputValue }) // Assuming your Flask expects a JSON with 'songUri'
+        body: JSON.stringify({ uri: inputValue }) // Make sure this matches the backend expectation
       });
   
       if (response.ok) {
         const data = await response.json();
         console.log('Response from Flask:', data);
   
-        
         setSelectedTrack(`https://open.spotify.com/track/${data.uri}`);
         setShowTrack(true);
       } else {
-        // Handle HTTP errors
         console.error('HTTP error:', response.status, response.statusText);
       }
     } catch (error) {
-      // Handle network errors
       console.error('Network error:', error);
     }
   
     setInputValue(''); // Clear the input field
   };
+  
   
 
   return (
