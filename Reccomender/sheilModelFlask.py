@@ -62,15 +62,28 @@ def getSongName(index, songFeats1):
     song_name = songFeats1.at[index, 'name']
     return song_name
 
+def getSongUriFromData(data):
+    track_name = data.get('song_name')
+    artist_name = data.get('artist')
+
+    spotify_wrapper = SpotifyAPIWrapper.SpotifyAPIWrapper()
+    results = spotify_wrapper.spotify.search(q=f"track:{track_name} artist:{artist_name}", type='track')
+    track = results['tracks']['items'][0]
+    track_uri = track['id']
+    return track_uri
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
-        if not data or 'uri' not in data:
+
+        if not data or 'song_name' not in data or 'artist' not in data:
             return jsonify({'error': 'No URI provided'}), 400
 
-        song_uri = data.get('uri')
+        song_uri = getSongUriFromData(data)
+        print(song_uri)
+        
         if not song_uri:
             return jsonify({'error': 'URI is empty'}), 400
 

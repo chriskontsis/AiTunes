@@ -7,7 +7,8 @@ url = 'http://127.0.0.1:5000/predict'
 spotify_uri = '2y4ZR0BUAVePljHSsZyIgj'
 
 # Data payload in JSON format
-data = {'uri': spotify_uri}
+data = {'artist':  "Taylor Swift",
+        'song_name': "22"}
 
 # Make the POST request to the Flask endpoint
 response = requests.post(url, json=data)
