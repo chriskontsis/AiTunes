@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import headphones from './headphones.png';
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
+  const [songName, setSongName] = useState('');
+  const [artistName, setArtistName] = useState('');
+  // const [inputValue, setInputValue] = useState('');
   const [showTrack, setShowTrack] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState('');
 
@@ -23,27 +25,27 @@ function App() {
   ];
 
   const handleSubmit = async () => {
-    if (!inputValue) {
-      alert('Please enter a song URI');
+    if (!songName || !artistName) {
+      alert('Please enter both a song name and an artist');
       return;
     }
-  
-    console.log('Submitting:', inputValue);
-  
+
+    console.log('Submitting:', songName, artistName);
+
     try {
       const response = await fetch('http://127.0.0.1:5000/predict', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uri: inputValue }) // Make sure this matches the backend expectation
+        body: JSON.stringify({ song_name: songName, artist: artistName })
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log('Response from Flask:', data);
-  
-        setSelectedTrack(`https://open.spotify.com/track/${data.uri}`);
+        
+        setSelectedTrack(`https://open.spotify.com/track/${data.song_uri}`);
         setShowTrack(true);
       } else {
         console.error('HTTP error:', response.status, response.statusText);
@@ -51,10 +53,13 @@ function App() {
     } catch (error) {
       console.error('Network error:', error);
     }
-  
-    setInputValue(''); // Clear the input field
+    
+    setSongName(''); // Clear the song name field
+    setArtistName(''); // Clear the artist name field
   };
-  
+  // TEST URI'S 
+  // 57wp7VFnV8X0pSVnYArGeJ
+  // 2y4ZR0BUAVePljHSsZyIgj
   
 
   return (
@@ -86,15 +91,22 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="shadow-lg md:rounded-3xl overflow-hidden bg-cyan-500 relative">
-  <input 
-    type="text" 
-    className="mt-16 mx-16 p-4 border border-gray-400 rounded-lg w-3/4"
-    value={inputValue} 
-    onChange={(e) => setInputValue(e.target.value)} 
-    placeholder="Give us an idea"
-  />
-  <button onClick={handleSubmit} className="absolute bottom-0 right-0 mb-16 mr-16 p-2 bg-gray-900 text-white rounded-lg">Submit</button>
+        <div className="shadow-lg md:rounded-3xl overflow-hidden bg-cyan-500 relative pb-16">
+        <input 
+            type="text" 
+            className="mt-16 mx-16 p-4 border border-gray-400 rounded-lg w-3/4"
+            value={songName} 
+            onChange={(e) => setSongName(e.target.value)} 
+            placeholder="Song Name"
+          />
+          <input 
+            type="text" 
+            className="mt-4 mx-16 p-4 border border-gray-400 rounded-lg w-3/4"
+            value={artistName} 
+            onChange={(e) => setArtistName(e.target.value)} 
+            placeholder="Artist Name"
+          />
+  <button onClick={handleSubmit} className="absolute bottom-0 right-0 mb-4 mr-16 p-2 bg-gray-900 text-white rounded-lg">Submit</button>
   <div className="bg-cyan-500">
     <div className="relative px-6 pt-8 sm:pt-16 md:pl-16 md:pr-0">
       <div className="max-w-2xl md:mx-0 md:max-w-none">
