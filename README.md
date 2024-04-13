@@ -37,14 +37,12 @@ To get a local copy up and running, follow these simple steps.
 
 ## Built With 🧰
 
-- **Backend**: Python, Django, Tensorflow
+- **Backend**: Python, Flask, Scikit-learn, Pandas, NumPy, Matplotlib
 - **Frontend**: React, Node.js
-- **Database**: PostgreSQL, SQLite
-- **Other Tools**: Pytest, Conda, Vercel
 
 ## Capstone 🤝
 
-CSE471 Capstone Project
+Capstone Project
 
 ## License 📄
 
